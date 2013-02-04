@@ -3,7 +3,6 @@ module FooFoo
     super + "2"
   end
 end
-
 class BarBar
   def sayhi
     "hello"
@@ -24,10 +23,28 @@ class FooPre < BarBar
   end
 end
 
+module PrepMod
+  def hello
+    super + " too"
+  end
+end
+
+class TopClass
+  def hello
+    "hello"
+  end
+end
+
+class CallerClass < TopClass
+  prepend PrepMod
+end
+
 describe "FooBar Prepend Include prior" do
   context "BarPrependFoo" do
     it { FooInc.new.sayhi.should == "hello21" }
     it { FooPre.new.sayhi.should == "hello12" }
   end
+  context "TopClassPre" do
+    it { CallerClass.new.hello.should == "hello too"}
+  end
 end
-
